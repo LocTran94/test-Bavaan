@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h2 style="text-align: center; margin-bottom: 20px">Thông tin đăng ký</h2>
+
+
+    <form style="border: 1px solid;  width: 300px; height: 300px; text-align: center; position: relative; left: 460px; margin-bottom: 10px">
+        <input type="text" placeholder="Phone Number" id="phoneNumber" name="phoneNumber" style="margin: 10px 30px">
+        <br/>
+        <input type="email" placeholder="Email" name="email" id="email" style="margin: 10px 30px"> <br/>
+        <div style="margin-bottom: 130px">
+            <select name="city" onchange="test1()" id="city" style=" float: left; margin: 10px 0">
+
+            </select>
+            <select name="district" id="district" style="float: right; margin: 10px 0 ">
+
+            </select>
+        </div>
+
+        <div style="text-align: center">
+            <button type="button" onclick="test()">Submit</button>
+        </div>
+
+
+    </form>
+
+
+    <div id="result" style="text-align: center">
+        <p id="resultPhoneNumber"></p>
+        <p id="resultEmail"></p>
+        <p id="resultSup-city"></p>
+        <p id="resultSup-district"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let arr = [
+        {id: "Nam Định", district: ["Nam Tân", "Nam Trực", "Nam Thanh"]},
+        {id: "Hà Nội", district: ["Mỹ Đình", "Ba Đình", "Tây Hồ"]},
+        {id: "Hồ Chí Minh", district: ["Quận 1", "Quận 2", "Quận 3"]},
+    ]
+
+    let select = "";
+    // hiển thị các tỉnh và thành phố
+    for (let i = 0; i < arr.length; i++) {
+        select += `<select name="city" id="city">
+           <option   value=${i}>${arr[i].id}</option>
+
+       </select>`
+    }
+
+    document.getElementById("city").innerHTML = select;
+
+
+    // hiển thị mặc định huyện
+
+    let select2 = "";
+    for (let i = 0; i < arr[0].district.length; i++) {
+        select2 += `<select name="district" id="district">
+           <option   value=${i}>${arr[0].district[i]}</option>
+
+       </select>`
+    }
+
+    document.getElementById("district").innerHTML = select2;
+
+
+    let index;
+    let select1 = "";
+
+    function test1() {
+
+        index = document.getElementById("city").value;
+
+        for (let i = 0; i < arr[index].district.length; i++) {
+            select1 += `<select name="district" id="district">
+           <option   value=${i}>${arr[index].district[i]}</option>
+
+       </select>`
+        }
+
+        document.getElementById("district").innerHTML = select1;
+
+        select1 = ""
+
+    }
+
+    let c;
+
+    function resultCity() {
+        c = document.getElementById("city").value;
+
+        document.getElementById("resultSup-city").innerHTML = " Tỉnh thành :" + arr[c].id
+
+
+    }
+
+    function resultDistrict() {
+        c = document.getElementById("city").value;
+        let d = document.getElementById("district").value;
+
+        document.getElementById("resultSup-district").innerHTML = "Quận/Huyện :" + arr[c].district[d]
+
+
+    }
+
+
+    function test() {
+        document.getElementById("resultPhoneNumber").innerHTML = document.getElementById("phoneNumber").value
+        document.getElementById("resultEmail").innerHTML = document.getElementById("email").value
+
+        resultCity()
+        resultDistrict()
+
+
+        document.getElementById("phoneNumber").value = ""
+        document.getElementById("email").value = ""
+    }
+
+
+</script>
+</body>
+</html>
